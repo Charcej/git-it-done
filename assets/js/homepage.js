@@ -4,6 +4,7 @@ var repoContainerEl = document.querySelector("#repos-container");
 var repoSearchTerm = document.querySelector("#repo-search-term");
 
 var formSubmitHandler = function (event) {
+  // prevent page from refreshing
   event.preventDefault();
 
   // get value from input element
@@ -18,14 +19,13 @@ var formSubmitHandler = function (event) {
   } else {
     alert("Please enter a GitHub username");
   }
-  // console.log(event);
 };
 
 var getUserRepos = function (user) {
   // format the github api url
   var apiUrl = "https://api.github.com/users/" + user + "/repos";
 
-  // make a request to the url
+  // make a get request to the url
   fetch(apiUrl)
     .then(function (response) {
       // request was successful
@@ -57,7 +57,7 @@ var displayRepos = function (repos, searchTerm) {
     // format repo name
     var repoName = repos[i].owner.login + "/" + repos[i].name;
 
-    // create a container for each repo
+    // create a link for each repo
     var repoEl = document.createElement("a");
     repoEl.classList = "list-item flex-row justify-space-between align-center";
     repoEl.setAttribute("href", "./single-repo.html?repo=" + repoName);
@@ -90,5 +90,4 @@ var displayRepos = function (repos, searchTerm) {
 };
 
 userFormEl.addEventListener("submit", formSubmitHandler);
-// getUserRepos("charcej");
 
